@@ -3,6 +3,9 @@
 #include<chrono>
 #include<iostream>
 #include<map>
+
+#include "Snake.hpp"
+
 enum class Direction
 {
     Right,
@@ -20,10 +23,11 @@ enum class FieldState
 
 
 using Board = std::vector<std::vector<FieldState>>;
-using Coords = std::pair<int,int>;
-class Mover{
+
+class Game
+{
 public:
-    Mover( int size,
+    Game( int size,
            char background,
            char walker );
     void play();
@@ -36,4 +40,5 @@ private:
     Coords walker_position;
     Direction dir;
     std::map<FieldState,char> symbols;
+    Snake snake;
 };

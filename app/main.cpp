@@ -3,7 +3,7 @@
 
 void testOMove()
 {
-    Mover mover( 10, '.', 'o' );
+    Game mover( 10, '.', 'o' );
     mover.play();
 }
 int main()

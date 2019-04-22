@@ -2,14 +2,14 @@
 #include <ncurses.h>
 #include <unistd.h>
 
-Mover::Mover( int size,
+Game::Game( int size,
               char background,
               char walker )
             : 
               background( background ),
               walker( walker ),
               space( size, std::vector<FieldState>( size, FieldState::Free )),
-              walker_position( 0, 0 ),
+              snake( 0, 0 ),
               dir( Direction::Right ),
               symbols{{ FieldState::Free, background },
                       { FieldState::SnakeNode, walker },
@@ -17,18 +17,18 @@ Mover::Mover( int size,
                       { FieldState::Obstacle, '#' }}
 { }
 
-void Mover::move()
+void Game::move()
 {
-    space [ walker_position.first ] [ walker_position.second ] = FieldState::Free;
+    space [ snake.head.first ] [ snake.head.second ] = FieldState::Free;
     if( dir == Direction::Down )
-        walker_position.first = ( ++walker_position.first < space.size() ) ? walker_position.first : 0;
+        snake.head.first = ( ++snake.head.first < space.size() ) ? snake.head.first : 0;
     else if ( dir == Direction::Up )
-        walker_position.first = ( --walker_position.first >= 0  ) ? walker_position.first : space.size() - 1;
+        snake.head.first = ( --snake.head.first >= 0  ) ? snake.head.first : space.size() - 1;
     else if ( dir == Direction::Left )
-        walker_position.second = ( --walker_position.second >= 0 ) ? walker_position.second : space.size() - 1;
+        snake.head.second = ( --snake.head.second >= 0 ) ? snake.head.second : space.size() - 1;
     else if ( dir == Direction::Right )
-        walker_position.second = ( ++walker_position.second < space.size() ) ? walker_position.second : 0;
-    space [ walker_position.first ] [ walker_position.second ] = FieldState::SnakeNode;
+        snake.head.second = ( ++snake.head.second < space.size() ) ? snake.head.second : 0;
+    space [ snake.head.first ] [ snake.head.second ] = FieldState::SnakeNode;
 }
 
 int kbhit(void)
@@ -43,7 +43,7 @@ int kbhit(void)
     }
 }
 
-void Mover::play()
+void Game::play()
 {
     initscr();
     cbreak();
@@ -55,13 +55,13 @@ void Mover::play()
         erase();
         if (kbhit()) {
             int newdir = getch();
-            if ( newdir == 97 )
+            if ( newdir == 97 && dir != Direction::Right )
                 dir = Direction::Left;
-            if ( newdir == 100 )
+            if ( newdir == 100 && dir != Direction::Left )
                 dir = Direction::Right;
-            if ( newdir == 115 )
+            if ( newdir == 115 && dir != Direction::Up )
                 dir = Direction::Down;
-            if ( newdir == 119 )
+            if ( newdir == 119 && dir != Direction::Down )
                 dir = Direction::Up;
             refresh();
         }
@@ -70,7 +70,7 @@ void Mover::play()
         {
             for( const auto & elem : row )
             {
-                printw( "%c", symbols [ elem ] ); 
+                printw( "%c ", symbols [ elem ] ); 
                 refresh();
             }
             printw("\n");
