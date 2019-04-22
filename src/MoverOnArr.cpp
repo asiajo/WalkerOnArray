@@ -7,22 +7,28 @@ Mover::Mover( int size,
               char walker )
             : 
               background( background ),
-              walker( walker )
-{
-    space = std::vector<char>( size, background );
-    walker_position = 0;
-    space[ walker_position ] = walker;
-    dir = Direction::Left;
-}
+              walker( walker ),
+              space( size, std::vector<FieldState>( size, FieldState::Free )),
+              walker_position( 0, 0 ),
+              dir( Direction::Right ),
+              symbols{{ FieldState::Free, background },
+                      { FieldState::SnakeNode, walker },
+                      { FieldState::Fruit, '@' },
+                      { FieldState::Obstacle, '#' }}
+{ }
 
 void Mover::move()
 {
-    space [ walker_position ] = background;
-    if( dir == Direction::Right )
-        walker_position = ( ++walker_position < space.size() ) ? walker_position : 0;
-    else
-        walker_position = ( --walker_position >= 0  ) ? walker_position : space.size() - 1;
-    space [ walker_position ] = walker;
+    space [ walker_position.first ] [ walker_position.second ] = FieldState::Free;
+    if( dir == Direction::Down )
+        walker_position.first = ( ++walker_position.first < space.size() ) ? walker_position.first : 0;
+    else if ( dir == Direction::Up )
+        walker_position.first = ( --walker_position.first >= 0  ) ? walker_position.first : space.size() - 1;
+    else if ( dir == Direction::Left )
+        walker_position.second = ( --walker_position.second >= 0 ) ? walker_position.second : space.size() - 1;
+    else if ( dir == Direction::Right )
+        walker_position.second = ( ++walker_position.second < space.size() ) ? walker_position.second : 0;
+    space [ walker_position.first ] [ walker_position.second ] = FieldState::SnakeNode;
 }
 
 int kbhit(void)
@@ -53,13 +59,23 @@ void Mover::play()
                 dir = Direction::Left;
             if ( newdir == 100 )
                 dir = Direction::Right;
-            if ( newdir == 113 )
-                break;
+            if ( newdir == 115 )
+                dir = Direction::Down;
+            if ( newdir == 119 )
+                dir = Direction::Up;
             refresh();
         }
         move();
-        for( const auto & elem : space )
-            {printw( "%c", elem ); refresh();}
+        for( const auto & row : space )
+        {
+            for( const auto & elem : row )
+            {
+                printw( "%c", symbols [ elem ] ); 
+                refresh();
+            }
+            printw("\n");
+            refresh();
+        }
         printw("\n");
         refresh();
         sleep(1);
