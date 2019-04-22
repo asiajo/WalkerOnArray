@@ -46,7 +46,7 @@ void Mover::play()
 
     scrollok(stdscr, TRUE);
     while (1) {
-
+        erase();
         if (kbhit()) {
             int newdir = getch();
             if ( newdir == 97 )
