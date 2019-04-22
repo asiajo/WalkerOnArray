@@ -12,4 +12,4 @@ file(GLOB TESTG "ut/*.cpp")
 set(SOURCES ${CLASSES} ${TESTG} ${MYMAIN} )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME} -lgtest -lpthread )
+target_link_libraries(${PROJECT_NAME} -lgtest -lncurses  -lpthread )
