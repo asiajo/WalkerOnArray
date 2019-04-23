@@ -5,6 +5,8 @@
 #include<map>
 
 #include "Snake.hpp"
+#include "Food.hpp"
+#include "Position.hpp"
 
 enum class Direction
 {

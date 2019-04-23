@@ -27,12 +27,12 @@ Game::Game( int size,
 
 void Game::putRandolmyFruit()
 {
-    Coords position_fruit;
+    Food fruit{space.size(), space.size()};
     do
     {
-        position_fruit = std::make_pair( random() % space.size(), random() % space.size() );
-    } while ( space [ position_fruit.first ] [ position_fruit.second ] != FieldState::Free );
-    space [ position_fruit.first ] [ position_fruit.second ] = FieldState::Fruit; 
+        fruit.generateFood();
+    } while ( space [ fruit.getFoodPosition().x ] [ fruit.getFoodPosition().y ] != FieldState::Free );
+    space [ fruit.getFoodPosition().x ] [ fruit.getFoodPosition().y ] = FieldState::Fruit; 
 }
 
 FieldState Game::moveHead()
