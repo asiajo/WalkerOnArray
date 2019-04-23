@@ -2,7 +2,7 @@ cmake_minimum_required( VERSION 3.10.0 )
 
 project(ChangeMoveOnArray)
 
-set(CMAKE_CXX_FLAGS "-std=c++17")
+set(CMAKE_CXX_FLAGS "-std=c++17 -g")
 include_directories(include)
 
 file(GLOB MYMAIN "app/main.cpp" )

@@ -31,14 +31,15 @@ public:
            char background,
            char walker );
     void play();
-    void move();
+    FieldState moveHead();
+    bool move();
+    void putRandolmyFruit();
+
 private:
-    
     const char background;
     const char walker;
     Board space;
-    Coords walker_position;
+    Snake snake;
     Direction dir;
     std::map<FieldState,char> symbols;
-    Snake snake;
 };

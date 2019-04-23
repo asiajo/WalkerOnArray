@@ -1,7 +1,7 @@
 #include "MoverOnArr.hpp"
 #include <ncurses.h>
 #include <unistd.h>
-
+#include <random>
 Game::Game( int size,
               char background,
               char walker )
@@ -9,26 +9,69 @@ Game::Game( int size,
               background( background ),
               walker( walker ),
               space( size, std::vector<FieldState>( size, FieldState::Free )),
-              snake( 0, 0 ),
+              snake( { size/2, size/2 } ),
               dir( Direction::Right ),
               symbols{{ FieldState::Free, background },
                       { FieldState::SnakeNode, walker },
                       { FieldState::Fruit, '@' },
                       { FieldState::Obstacle, '#' }}
-{ }
+{   
+    space[ size/2 ] [ size/2  ] = FieldState::SnakeNode;
+    for( int i = 1; i < 3; ++i )
+    {   snake.body.push_back( { size/2, size/2 - i } );
+        space[ size/2 ] [ size/2 - i ] = FieldState::SnakeNode;
+    }
 
-void Game::move()
+    putRandolmyFruit();
+}
+
+void Game::putRandolmyFruit()
 {
-    space [ snake.head.first ] [ snake.head.second ] = FieldState::Free;
+    Coords position_fruit;
+    do
+    {
+        position_fruit = std::make_pair( random() % space.size(), random() % space.size() );
+    } while ( space [ position_fruit.first ] [ position_fruit.second ] != FieldState::Free );
+    space [ position_fruit.first ] [ position_fruit.second ] = FieldState::Fruit; 
+}
+
+FieldState Game::moveHead()
+{
+    // space [ snake.head.first ] [ snake.head.second ] = FieldState::Free;
+    Coords newHead = snake.head;
     if( dir == Direction::Down )
-        snake.head.first = ( ++snake.head.first < space.size() ) ? snake.head.first : 0;
+        newHead.first = ( ++newHead.first < space.size() ) ? newHead.first : 0;
     else if ( dir == Direction::Up )
-        snake.head.first = ( --snake.head.first >= 0  ) ? snake.head.first : space.size() - 1;
+        newHead.first = ( --newHead.first >= 0  ) ? newHead.first : space.size() - 1;
     else if ( dir == Direction::Left )
-        snake.head.second = ( --snake.head.second >= 0 ) ? snake.head.second : space.size() - 1;
+        newHead.second = ( --newHead.second >= 0 ) ? newHead.second : space.size() - 1;
     else if ( dir == Direction::Right )
-        snake.head.second = ( ++snake.head.second < space.size() ) ? snake.head.second : 0;
+        newHead.second = ( ++newHead.second < space.size() ) ? newHead.second : 0;
+    snake.head = newHead;
+    FieldState fieldToCheckCollision = space [ snake.head.first ] [ snake.head.second ];
     space [ snake.head.first ] [ snake.head.second ] = FieldState::SnakeNode;
+    return fieldToCheckCollision;
+}
+
+bool Game::move()
+{
+    Coords oldHead = snake.head;
+    Coords oldTail = snake.body.back();
+    FieldState fieldToCheckCollision = moveHead();
+    if( fieldToCheckCollision == FieldState::Obstacle || fieldToCheckCollision == FieldState::SnakeNode )
+        return false;
+    snake.body.push_front( oldHead );
+    if( fieldToCheckCollision == FieldState::Fruit )
+    {
+        putRandolmyFruit();
+    }
+    else
+    {
+        snake.body.pop_back();
+    }
+    
+    space [ oldTail.first ] [ oldTail.second ] = FieldState::Free;
+    return true;
 }
 
 int kbhit(void)
@@ -65,7 +108,9 @@ void Game::play()
                 dir = Direction::Up;
             refresh();
         }
-        move();
+
+        if( !move() )
+            break;
         for( const auto & row : space )
         {
             for( const auto & elem : row )
