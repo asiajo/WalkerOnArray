@@ -21,7 +21,6 @@ Game::Game( int size,
     {   snake.body.push_back( { size/2, size/2 - i } );
         space[ size/2 ] [ size/2 - i ] = FieldState::SnakeNode;
     }
-
     putRandolmyFruit();
 }
 
@@ -69,7 +68,6 @@ bool Game::move()
     {
         snake.body.pop_back();
     }
-    
     space [ oldTail.first ] [ oldTail.second ] = FieldState::Free;
     return true;
 }
@@ -96,7 +94,8 @@ void Game::play()
     scrollok(stdscr, TRUE);
     while (1) {
         erase();
-        if (kbhit()) {
+        if (kbhit()) 
+        {
             int newdir = getch();
             if ( newdir == 97 && dir != Direction::Right )
                 dir = Direction::Left;
@@ -111,6 +110,7 @@ void Game::play()
 
         if( !move() )
             break;
+
         for( const auto & row : space )
         {
             for( const auto & elem : row )
@@ -123,7 +123,7 @@ void Game::play()
         }
         printw("\n");
         refresh();
-        sleep(1);
+        usleep(50000);
     }
     endwin();
 }
