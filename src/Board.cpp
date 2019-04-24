@@ -3,7 +3,10 @@
 Board::Board(int width, int height)
 {
     board.resize(height);
-    std::for_each(begin(board), end(board), [&](auto& v){v.resize(width);});
+    std::for_each(begin(board), end(board), [&](auto& v)
+                                            {
+                                                v = std::vector<FieldState>(FieldState::Free, width);
+                                            });
 }
 
 void Board::setFieldState(Position pos, FieldState state)
