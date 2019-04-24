@@ -5,6 +5,8 @@ Snake game.
 
 ## Compilation
 
+Game uses ncurses library. 
+
 Under Linux:
 From build folder run the terminal and type:
 
@@ -17,11 +19,12 @@ From build folder run the terminal and type:
 The game will start!
 
 ## TODO:
+
 - [ ] create UML diagram with game structure
-- [ ] create board class
+- [x] create board class
 - [x] create snake class
 - [ ] create controller class
 - [ ] create displayer class
-	- [ ] Terminal
+	- [x] Terminal
 	- [ ] GUI
 - [ ] create unit tests
