@@ -10,14 +10,14 @@ Game::Game(   int height,
               background( background ),
               walker( walker ),
               space( height, std::vector<FieldState>( width, FieldState::Free )),
-              snake( { height/2, height/2 } ),
+              snake( { height/2, width/2 } ),
               dir( Direction::Right ),
               symbols{{ FieldState::Free, background },
                       { FieldState::SnakeNode, walker },
                       { FieldState::Fruit, '@' },
                       { FieldState::Obstacle, '#' }}
 {   
-    space[ height/2 ] [ width/2  ] = FieldState::SnakeNode;
+    space[ height/2 ] [ width/2 ] = FieldState::SnakeNode;
     for( int i = 1; i < 3; ++i )
     {   snake.body.push_back( { height/2, width/2 - i } );
         space[ height/2 ] [ width/2 - i ] = FieldState::SnakeNode;
@@ -37,16 +37,15 @@ void Game::putRandolmyFruit()
 
 FieldState Game::moveHead()
 {
-    // space [ snake.head.x ] [ snake.head.y ] = FieldState::Free;
     Position newHead = snake.head;
     if( dir == Direction::Down )
-        newHead.x = ( ++newHead.x < space.size() ) ? newHead.x : 0;
+        newHead.x = ( ++newHead.x < getHeight() ) ? newHead.x : 0;
     else if ( dir == Direction::Up )
-        newHead.x = ( --newHead.x >= 0  ) ? newHead.x : space.size() - 1;
+        newHead.x = ( --newHead.x >= 0  ) ? newHead.x : getHeight() - 1;
     else if ( dir == Direction::Left )
-        newHead.y = ( --newHead.y >= 0 ) ? newHead.y : space.size() - 1;
+        newHead.y = ( --newHead.y >= 0 ) ? newHead.y : getWidth() - 1;
     else if ( dir == Direction::Right )
-        newHead.y = ( ++newHead.y < space.size() ) ? newHead.y : 0;
+        newHead.y = ( ++newHead.y < getWidth() ) ? newHead.y : 0;
     snake.head = newHead;
     FieldState fieldToCheckCollision = space [ snake.head.x ] [ snake.head.y ];
     space [ snake.head.x ] [ snake.head.y ] = FieldState::SnakeNode;
@@ -124,7 +123,7 @@ void Game::play()
         }
         printw("\n");
         refresh();
-        usleep(50000);
+        usleep(1000000);
     }
     endwin();
 }

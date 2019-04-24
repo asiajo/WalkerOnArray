@@ -4,7 +4,7 @@
 void testSnakeInConsole()
 {
     const int H = 10;
-    const int W = 10;
+    const int W = 15;
     Game snake( H, W, '.', 'o' );
     snake.play();
 }
