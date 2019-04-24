@@ -17,7 +17,6 @@ From build folder run the terminal and type:
 The game will start!
 
 ## TODO:
-
 - [ ] create UML diagram with game structure
 - [ ] create board class
 - [x] create snake class
