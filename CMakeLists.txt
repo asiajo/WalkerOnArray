@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.10.0 )
 
-project(ChangeMoveOnArray)
+project(WalkerOnArray)
 
 set(CMAKE_CXX_FLAGS "-std=c++17 -g")
 include_directories(include)
