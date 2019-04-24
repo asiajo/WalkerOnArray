@@ -7,44 +7,26 @@
 #include "Snake.hpp"
 #include "Food.hpp"
 #include "Position.hpp"
-
-enum class Direction
-{
-    Right,
-    Left,
-    Up,
-    Down
-};
-enum class FieldState
-{
-    Free,
-    SnakeNode,
-    Fruit,
-    Obstacle
-};
+#include "Controller.hpp"
+#include "Board.hpp"
+#include "TerminalGUI.hpp"
 
 
-using Board = std::vector<std::vector<FieldState>>;
 
 class Game
 {
 public:
-    Game(  int height,
-           int width,
-           char background,
-           char walker );
+    Game( int height, int width );
     void play();
+
+private:
     FieldState moveHead();
     bool move();
     void putRandolmyFruit();
-
-private:
-    int getHeight() const { return space.size(); };
-    int getWidth() const { return space.at(0).size(); };
-    const char background;
-    const char walker;
-    Board space;
+    
+    Board board;
     Snake snake;
     Direction dir;
-    std::map<FieldState,char> symbols;
+    Controller controller;
+    TerminalGUI terminalGui;
 };
