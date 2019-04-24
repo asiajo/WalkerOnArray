@@ -1,10 +1,12 @@
+#pragma once
 #include<deque>
-using Coords = std::pair<int,int>;
-using Body = std::deque<Coords>;
+#include "Position.hpp"
+
+using Body = std::deque<Position>;
 class Snake
 {
 public:
-    Coords head;
+    Position head;
     Body body;
-    Snake (Coords);
+    Snake (Position);
 };

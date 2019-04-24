@@ -1,14 +1,16 @@
 #include "MoverOnArr.hpp"
 #include <iostream>
 
-void testOMove()
+void testSnakeInConsole()
 {
-    Game mover( 10, '.', 'o' );
-    mover.play();
+    const int H = 10;
+    const int W = 10;
+    Game snake( H, W, '.', 'o' );
+    snake.play();
 }
 int main()
 {
     std::cout << "=== START ===" << std::endl;
-    testOMove();
+    testSnakeInConsole();
     return 0;
 }

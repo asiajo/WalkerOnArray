@@ -29,7 +29,8 @@ using Board = std::vector<std::vector<FieldState>>;
 class Game
 {
 public:
-    Game( int size,
+    Game(  int height,
+           int width,
            char background,
            char walker );
     void play();
@@ -38,6 +39,8 @@ public:
     void putRandolmyFruit();
 
 private:
+    int getHeight() const { return space.size(); };
+    int getWidth() const { return space.at(0).size(); };
     const char background;
     const char walker;
     Board space;

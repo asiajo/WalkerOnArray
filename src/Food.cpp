@@ -1,16 +1,13 @@
-#include "../include/Food.hpp"
+#include "Food.hpp"
 
-Food::Food(int boardX, int boardY) : _boardX(boardX), _boardY(boardY){}
-
-void Food::generateFood()
+void Food::generateFood(int heightBoard, int widthBoard)
 {
     srand(time(0));
-    _x = rand() % _boardX;
-    _y = rand() % _boardY;
+    position.x = rand() % heightBoard;
+    position.y = rand() % widthBoard;
 }
 
 Position Food::getFoodPosition()
 {
-    Position pos{_x, _y};
-    return pos;
+    return position;
 }
