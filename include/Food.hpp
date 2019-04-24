@@ -1,16 +1,12 @@
 #pragma once
 
-#include "Position.hpp"
 #include <random>
+#include "Position.hpp"
 
 class Food
 {
-    int _boardX;
-    int _boardY;
-    int _x;
-    int _y;
+    Position position;
 public:
-    Food(int boardX, int boardY);
-    void generateFood();
+    void generateFood(int heightBoard, int widthBoard);
     Position getFoodPosition();
-};
+};  
