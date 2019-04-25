@@ -5,7 +5,7 @@ Board::Board(int width, int height)
     board.resize(height);
     std::for_each(begin(board), end(board), [&](auto& v)
                                             {
-                                                v = std::vector<FieldState>(FieldState::Free, width);
+                                                v = std::vector<FieldState>(width, FieldState::Free );
                                             });
 }
 

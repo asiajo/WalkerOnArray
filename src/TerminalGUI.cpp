@@ -35,5 +35,5 @@ void TerminalGUI::display(Board& board)
         }
         printw("\n");
         refresh();
-        usleep(1000000);
+        usleep(500000);
 }
