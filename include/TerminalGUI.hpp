@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Board.hpp"
+#include "Displayer.hpp"
+// #include "Board.hpp"
 #include <ncurses.h>
 #include <unistd.h>
 #include <map>
 
-class TerminalGUI
+class TerminalGUI : public DisplayerI
 {
     std::map<FieldState,char> symbols;
 public:

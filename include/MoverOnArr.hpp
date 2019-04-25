@@ -3,6 +3,7 @@
 #include<chrono>
 #include<iostream>
 #include<map>
+#include<memory>
 
 #include "Snake.hpp"
 #include "Food.hpp"
@@ -28,5 +29,5 @@ private:
     Snake snake;
     Direction dir;
     Controller controller;
-    TerminalGUI terminalGui;
+    std::unique_ptr<DisplayerI> displayer;
 };
