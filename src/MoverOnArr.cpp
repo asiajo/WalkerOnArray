@@ -6,7 +6,8 @@ Game::Game(   int height,
             : snake( { width/2, height/2 } ),
               board( width, height )              
 {   
-    dir = controller.getDirection();
+    const Direction DEFAULT_DIRECTION = Direction::Right;
+    dir = DEFAULT_DIRECTION;
     board.setFieldState(Position{width/2, height/2}, FieldState::SnakeNode);
     for( int i = 1; i < 3; ++i )
     {   
@@ -68,12 +69,13 @@ bool Game::move()
 void Game::play()
 {
     displayer = std::make_unique<TerminalGUI>();
+    controller = std::make_unique<TerminalController>();
     while ( 1 ) 
-    { 
+    {
         if(!move())
             break;
         displayer->display(board);
         // terminalGui.display(board);
-        dir = controller.getDirection();  
+        dir = controller->getDirection();
     }
 }

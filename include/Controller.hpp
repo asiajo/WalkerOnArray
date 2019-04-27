@@ -1,8 +1,5 @@
 #pragma once
 
-#include <ncurses.h>
-#include <unistd.h>
-
 enum class Direction
 {
     Right,
@@ -13,8 +10,8 @@ enum class Direction
 
 class Controller
 {
-    Direction dir = Direction::Right;
-    int kbhit(void);
 public:
-    Direction getDirection();
+    Direction dir = Direction::Right;
+    virtual Direction getDirection() = 0;
+    virtual ~Controller() = default;
 };

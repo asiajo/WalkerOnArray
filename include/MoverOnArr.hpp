@@ -11,7 +11,7 @@
 #include "Controller.hpp"
 #include "Board.hpp"
 #include "TerminalGUI.hpp"
-
+#include "TerminalController.hpp"
 
 
 class Game
@@ -28,6 +28,6 @@ private:
     Board board;
     Snake snake;
     Direction dir;
-    Controller controller;
+    std::unique_ptr<Controller> controller;
     std::unique_ptr<DisplayerI> displayer;
 };
