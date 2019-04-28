@@ -66,16 +66,32 @@ bool Game::move()
 
 
 
-void Game::play()
+void Game::playInTerminal()
 {
-    displayer = std::make_unique<TerminalGUI>();
-    controller = std::make_unique<TerminalController>();
+    TerminalGUI displayer;
+    TerminalController controller;
     while ( 1 ) 
-    {
-        if(!move())
+    { 
+        if( !move() )
             break;
-        displayer->display(board);
-        // terminalGui.display(board);
-        dir = controller->getDirection();
+        displayer.display( board );
+        dir = controller.getDirection();
+    }
+}
+
+void Game::playInSFML()
+{
+    
+    sf::RenderWindow window;
+    SfmlGUI displayer;
+    SfmlController controller;
+
+    displayer.init( window, board.getHeight(), board.getWidth());
+    while ( window.isOpen() ) 
+    {
+        displayer.display( window, board );
+        if( !move() )
+            window.close();
+        dir = controller.getDirection( window );
     }
 }

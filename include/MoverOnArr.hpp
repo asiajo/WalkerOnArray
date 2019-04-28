@@ -1,3 +1,4 @@
+#pragma once
 #include<vector>
 #include<thread>
 #include<chrono>
@@ -12,14 +13,15 @@
 #include "Board.hpp"
 #include "TerminalGUI.hpp"
 #include "TerminalController.hpp"
-
+#include "SfmlController.hpp"
+#include "SfmlGUI.hpp"
 
 class Game
 {
 public:
     Game( int height, int width );
-    void play();
-
+    void playInTerminal();
+    void playInSFML();
 private:
     FieldState moveHead();
     bool move();
@@ -28,6 +30,4 @@ private:
     Board board;
     Snake snake;
     Direction dir;
-    std::unique_ptr<Controller> controller;
-    std::unique_ptr<DisplayerI> displayer;
 };

@@ -1,15 +1,15 @@
 #pragma once
+#include <memory>
+#include <map>
+#include "Board.hpp"
+#include <SFML/Graphics.hpp>
 
-#include "Displayer.hpp"
-#include "SFML/Graphics"
-// #include "Board.hpp"
-#include " "
-
-class SfmlGui : public DisplayerI
+class SfmlGUI
 {
+    std::map<FieldState, sf::Color> colors;
+    const float TILE_SIZE = 10.f;
 public:
-    SfmlGui();
-    ~SfmlGui();
-    void display(Board& board);
-
+    SfmlGUI();
+    void init( sf::RenderWindow& window, int height, int width );
+    void display( sf::RenderWindow& window, Board& board);
 };

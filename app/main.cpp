@@ -3,10 +3,11 @@
 
 void testSnakeInConsole()
 {
-    const int H = 10;
-    const int W = 15;
-    Game snake( H, W);
-    snake.play();
+    const int H = 30;
+    const int W = 30;
+    Game snake( H, W );
+    // snake.playInTerminal();
+    snake.playInSFML();
 }
 int main()
 {
