@@ -6,9 +6,9 @@ Snake game.
 ## Compilation
 
 Game uses ncurses library.
-To install it on Linux: https://www.cyberciti.biz/faq/linux-install-ncurses-library-headers-on-debian-ubuntu-centos-fedora/
+To install it on Linux: [tutNcurs][df1]
 Game uses SFML library. 
-To install it on Linux: https://www.sfml-dev.org/tutorials/2.5/start-linux.php
+To install it on Linux: [tutSfml][df2]
 
 Under Linux:
 From build folder run the terminal and type:
@@ -31,3 +31,7 @@ The game will start!
 	- [x] Terminal
 	- [x] GUI
 - [ ] create unit tests
+
+
+[df1]: <https://www.cyberciti.biz/faq/linux-install-ncurses-library-headers-on-debian-ubuntu-centos-fedora/>
+[df2]: <https://www.sfml-dev.org/tutorials/2.5/start-linux.php>
