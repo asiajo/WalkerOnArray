@@ -1,26 +1,33 @@
+#pragma once
 #include<vector>
 #include<thread>
 #include<chrono>
 #include<iostream>
+#include<map>
+#include<memory>
 
-enum class Direction
+#include "Snake.hpp"
+#include "Food.hpp"
+#include "Position.hpp"
+#include "Controller.hpp"
+#include "Board.hpp"
+#include "TerminalGUI.hpp"
+#include "TerminalController.hpp"
+#include "SfmlController.hpp"
+#include "SfmlGUI.hpp"
+
+class Game
 {
-    Right,
-    Left
-};
-
-class Mover{
 public:
-    Mover( int size,
-           char background,
-           char walker );
-    void play();
-    void move();
+    Game( int height, int width );
+    void playInTerminal();
+    void playInSFML();
 private:
+    FieldState moveHead();
+    bool move();
+    void putRandolmyFruit();
     
-    const char background;
-    const char walker;
-    std::vector<char> space;
-    int walker_position;
+    Board board;
+    Snake snake;
     Direction dir;
 };
